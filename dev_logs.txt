@@ -1,0 +1,6 @@
+   ▲ Next.js 15.5.18
+   - Local:        http://localhost:3004
+   - Network:      http://169.254.8.1:3004
+
+ ✓ Starting...
+ ✓ Ready in 2.3s

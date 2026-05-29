@@ -3,7 +3,7 @@
 import { useWishlistStore } from "@/store/useWishlistStore";
 import { useCartStore } from "@/store/useCartStore";
 import Link from "next/link";
-import Image from "next/image";
+import { ImageWithFallback as Image } from "@/components/ui/ImageWithFallback";
 import { Heart, ShoppingBag, X, MessageCircle, ExternalLink } from "lucide-react";
 import { useState, useEffect } from "react";
 import { generateWhatsAppLink } from "@/services/whatsapp";

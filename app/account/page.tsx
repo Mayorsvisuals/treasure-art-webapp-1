@@ -20,7 +20,7 @@ export default function AccountPage() {
     <div className="flex flex-col min-h-screen bg-luxury-black">
       <PageHero
         title="My Account"
-        imageUrl="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=2000&auto=format&fit=crop"
+        imageUrl="https://picsum.photos/seed/154400/2000/2500"
       />
 
       <section className="py-24 flex-1">

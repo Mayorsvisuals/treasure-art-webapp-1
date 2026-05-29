@@ -17,7 +17,7 @@ export default async function ArchitecturalPage() {
       <PageHero
         title="Architectural Details"
         subtitle="Large-scale installations, deep-pour basins, wall panels, and structural accents for high-end spaces."
-        imageUrl="https://images.unsplash.com/photo-1628744448840-55bdb2497bd4?q=80&w=2000&auto=format&fit=crop"
+        imageUrl="https://picsum.photos/seed/162874/2000/2500"
       />
       <ShopGrid
         products={products}

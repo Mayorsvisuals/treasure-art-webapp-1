@@ -24,7 +24,7 @@ const navItems = [
   { name: "Categories", href: "/admin/categories", icon: Tags },
   { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
   { name: "Customers", href: "/admin/customers", icon: Users },
-  { name: "Content", href: "/admin/content", icon: LayoutTemplate },
+  { name: "Content", href: "/admin/homepage-content", icon: LayoutTemplate },
   { name: "Discounts", href: "/admin/discounts", icon: Percent },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];

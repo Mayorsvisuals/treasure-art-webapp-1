@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
-import Image from "next/image";
+import { ImageWithFallback as Image } from "@/components/ui/ImageWithFallback";
 import { Heart, ShoppingBag } from "lucide-react";
 import { Product } from "@/types/product";
 import { useWishlistStore } from "@/store/useWishlistStore";

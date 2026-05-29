@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { ImageWithFallback as Image } from "@/components/ui/ImageWithFallback";
 import { motion, AnimatePresence } from "motion/react";
 
 const PLACEHOLDER_IMG =

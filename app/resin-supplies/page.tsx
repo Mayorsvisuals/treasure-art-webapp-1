@@ -16,7 +16,7 @@ export default async function ResinSuppliesPage() {
       <PageHero
         title="Artist Supplies"
         subtitle="Uncompromising quality epoxy resins, mica powders, alcohol inks, and casting tools."
-        imageUrl="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2000&auto=format&fit=crop"
+        imageUrl="https://picsum.photos/seed/151336/2000/2500"
       />
       <ShopGrid
         products={products}

@@ -29,7 +29,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       <PageHero
         title="The Collection"
         subtitle="Explore our complete range of bespoke resin art, interiors, and premium supplies."
-        imageUrl="https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=2000&auto=format&fit=crop"
+        imageUrl="https://picsum.photos/seed/154093/2000/2500"
       />
       <ShopGrid
         products={products}

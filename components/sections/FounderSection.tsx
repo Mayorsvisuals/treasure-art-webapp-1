@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import Image from "next/image";
+import { ImageWithFallback as Image } from "@/components/ui/ImageWithFallback";
 
 export function FounderSection() {
   return (
@@ -20,7 +20,7 @@ export function FounderSection() {
               <div className="absolute -inset-4 border border-luxury-gold/30 hidden md:block" />
 
               <Image
-                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop"
+                src="https://picsum.photos/seed/154400/800/1000"
                 alt="Ayomikun Ayodeji - Founder & Artist"
                 fill
                 className="object-cover"

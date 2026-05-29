@@ -17,7 +17,7 @@ export default function ContactPage() {
       <PageHero
         title="Contact Us"
         subtitle="For inquiries, custom commissions, and creative consultations."
-        imageUrl="https://images.unsplash.com/photo-1544207959-c13f6abdbd62?q=80&w=2000&auto=format&fit=crop"
+        imageUrl="https://picsum.photos/seed/154420/2000/2500"
       />
 
       <section className="py-24 bg-luxury-black">

@@ -11,7 +11,7 @@ export function Hero() {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage:
-            "url(https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=2000&auto=format&fit=crop)",
+            "url(https://picsum.photos/seed/154093/2000/2500",
         }}
       >
         <div className="absolute inset-0 bg-luxury-black/60 md:bg-luxury-black/40 bg-gradient-to-t from-luxury-black via-luxury-black/50 to-transparent" />

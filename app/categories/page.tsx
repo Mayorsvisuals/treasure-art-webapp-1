@@ -20,7 +20,7 @@ export default async function CategoriesPage() {
       <PageHero
         title="Curated Collections"
         subtitle="Discover our distinctive ranges categorized by medium, application, and form."
-        imageUrl="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2000&auto=format&fit=crop"
+        imageUrl="https://picsum.photos/seed/160021/2000/2500"
       />
 
       {/* We reuse the featured categories block here, which matches perfectly */}

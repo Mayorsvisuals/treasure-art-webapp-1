@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import Image from "next/image";
+import { ImageWithFallback as Image } from "@/components/ui/ImageWithFallback";
 
 interface CategoryWithCount {
   title: string;
@@ -15,42 +15,42 @@ const categories: CategoryWithCount[] = [
   {
     title: "Resin Supplies",
     image:
-      "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=800&auto=format&fit=crop",
+      "https://picsum.photos/seed/151336/800/1000",
     href: "/shop?category=supplies",
     slug: "supplies",
   },
   {
     title: "Resin Jewelry",
     image:
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop",
+      "https://picsum.photos/seed/151556/800/1000",
     href: "/shop?category=jewelry",
     slug: "jewelry",
   },
   {
     title: "Resin Interiors",
     image:
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop",
+      "https://picsum.photos/seed/160021/800/1000",
     href: "/shop?category=interiors",
     slug: "interiors",
   },
   {
     title: "Architectural Resin",
     image:
-      "https://images.unsplash.com/photo-1628744448840-55bdb2497bd4?q=80&w=800&auto=format&fit=crop",
+      "https://picsum.photos/seed/162874/800/1000",
     href: "/shop?category=architectural",
     slug: "architectural",
   },
   {
     title: "Outdoor Collection",
     image:
-      "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=800&auto=format&fit=crop",
+      "https://picsum.photos/seed/160581/800/1000",
     href: "/shop?category=outdoor",
     slug: "outdoor",
   },
   {
     title: "Custom Luxury Projects",
     image:
-      "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?q=80&w=800&auto=format&fit=crop",
+      "https://picsum.photos/seed/160060/800/1000",
     href: "/custom-projects",
     slug: "custom",
   },

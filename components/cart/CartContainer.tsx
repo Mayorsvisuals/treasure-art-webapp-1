@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import { ImageWithFallback as Image } from "@/components/ui/ImageWithFallback";
 import { ShoppingBag, Minus, Plus, X, Heart, MessageCircle, ShieldCheck, Truck, Award, Lock } from "lucide-react";
 import { useCartStore } from "@/store/useCartStore";
 import { useState, useEffect } from "react";

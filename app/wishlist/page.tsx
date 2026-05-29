@@ -12,7 +12,7 @@ export default function WishlistPage() {
       <PageHero
         title="Wishlist"
         subtitle="Your curated selection of luxury resin pieces."
-        imageUrl="https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=2000&auto=format&fit=crop"
+        imageUrl="https://picsum.photos/seed/154093/2000/2500"
       />
 
       <section className="py-24 bg-luxury-black flex-1 flex flex-col">

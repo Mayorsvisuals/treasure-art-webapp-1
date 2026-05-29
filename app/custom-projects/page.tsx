@@ -17,7 +17,7 @@ export default function CustomProjectsPage() {
       <PageHero
         title="Custom Commissions"
         subtitle="Bring your architectural visions to life with our bespoke residential and commercial resin installations."
-        imageUrl="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=2000&auto=format&fit=crop"
+        imageUrl="https://picsum.photos/seed/162064/2000/2500"
       />
 
       <section className="py-24 bg-luxury-black">

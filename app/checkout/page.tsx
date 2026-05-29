@@ -3,7 +3,7 @@
 import { useCartStore } from "@/store/useCartStore";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { ImageWithFallback as Image } from "@/components/ui/ImageWithFallback";
 import Link from "next/link";
 import { ChevronLeft, ShieldCheck, Truck, Award, Lock, MessageCircle } from "lucide-react";
 import { generateWhatsAppLink } from "@/services/whatsapp";

@@ -12,7 +12,7 @@ export default function AboutPage() {
       <PageHero
         title="Our Story"
         subtitle="Crafting timeless luxury through the fluid medium of resin."
-        imageUrl="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?q=80&w=2000&auto=format&fit=crop"
+        imageUrl="https://picsum.photos/seed/160060/2000/2500"
       />
 
       <section className="py-24 bg-luxury-black">
