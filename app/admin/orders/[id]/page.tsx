@@ -51,7 +51,7 @@ export default function OrderDetailsPage({ params }: { params: Promise<{ id: str
     updateInternalNotes(order.id, internalNotes);
   };
 
-  const wpNumber = "2348100781114";
+  const wpNumber = "2348100791114";
   const encodeMsg = (msg: string) => encodeURIComponent(msg);
 
   const getStatusBadgeColor = (status: AdminOrder['fulfillmentStatus']) => {
