@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,6 +17,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const [mounted, setMounted] = useState(false);
   const [imgError, setImgError] = useState(false);
   const {
     addItem: addWishlist,
@@ -25,7 +26,11 @@ export function ProductCard({ product }: ProductCardProps) {
   } = useWishlistStore();
   const { addItem: addCart } = useCartStore();
 
-  const inWishlist = isInWishlist(product.id);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const inWishlist = mounted ? isInWishlist(product.id) : false;
   const isConsultation = product.type === "consultation";
   const isConfigurable = product.type === "configurable";
 

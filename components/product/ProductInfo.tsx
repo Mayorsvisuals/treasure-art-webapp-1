@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Product } from "@/types/product";
 import { useCartStore } from "@/store/useCartStore";
 import { useWishlistStore } from "@/store/useWishlistStore";
@@ -28,13 +28,18 @@ export function ProductInfo({ product }: { product: Product }) {
     isInWishlist,
   } = useWishlistStore();
 
+  const [mounted, setMounted] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string>
   >({});
   const [activeTab, setActiveTab] = useState<string | null>("description");
 
-  const inWishlist = isInWishlist(product.id);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const inWishlist = mounted ? isInWishlist(product.id) : false;
   const isConfigurable = product.type === "configurable";
   const isConsultation = product.type === "consultation";
 

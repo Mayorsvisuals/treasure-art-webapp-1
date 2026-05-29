@@ -20,15 +20,8 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const resolvedParams = await searchParams;
   const { category, q } = resolvedParams;
 
-  let products = [];
-  if (q) {
-    products = await searchProducts(q);
-  } else if (category) {
-    products = await getProductsByCategory(category);
-  } else {
-    products = await getProducts();
-  }
-
+  // We fetch ALL products so client-side filtering works without page reloads.
+  const products = await getProducts();
   const categories = await getCategories();
 
   return (

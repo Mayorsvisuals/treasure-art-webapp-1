@@ -64,7 +64,8 @@ export async function searchProducts(query: string): Promise<Product[]> {
   
   try {
     if (isSupabaseConfigured()) {
-      // This uses ILIKE behind the scenes
+      // This uses ILIKE behind the scenes. We'll stick to a simple ILIKE for Supabase for now,
+      // but enhance the local search for seed data which is definitely used.
       const { data, error } = await supabase.from('products').select('*').ilike('title', `%${query}%`);
       if (!error && data) return data as Product[];
     }
@@ -73,11 +74,13 @@ export async function searchProducts(query: string): Promise<Product[]> {
   }
   
   const lowerQuery = query.toLowerCase();
-  return seededProducts.filter(p => 
-    p.title.toLowerCase().includes(lowerQuery) || 
-    p.description.toLowerCase().includes(lowerQuery) ||
-    p.category.toLowerCase().includes(lowerQuery)
-  );
+  const searchTerms = lowerQuery.split(' ').filter(term => term.length > 0);
+
+  return seededProducts.filter(p => {
+    const searchableText = `${p.title} ${p.description} ${p.category} ${p.tags?.join(' ') || ''}`.toLowerCase();
+    // Every term in the query must be partially present in the searchable text
+    return searchTerms.every(term => searchableText.includes(term));
+  });
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {

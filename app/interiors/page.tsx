@@ -1,6 +1,6 @@
 import { PageHero } from "@/components/ui/PageHero";
 import { ShopGrid } from "@/components/sections/ShopGrid";
-import { getProductsByCategory, getCategories } from "@/lib/data/products";
+import { getProducts, getCategories } from "@/lib/data/products";
 
 export const metadata = {
   title: "Resin Interiors | Treasure Arts",
@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function InteriorsPage() {
-  const products = await getProductsByCategory("interiors");
+  const products = await getProducts();
   const categories = await getCategories();
 
   return (
