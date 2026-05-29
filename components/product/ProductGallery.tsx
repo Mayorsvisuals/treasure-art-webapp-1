@@ -25,14 +25,14 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
   return (
     <div className="flex flex-col gap-6">
       {/* Main Image */}
-      <div className="relative aspect-[4/5] md:aspect-square w-full overflow-hidden bg-luxury-charcoal">
+      <div className="relative aspect-[4/5] md:aspect-square lg:aspect-[4/5] w-full overflow-hidden bg-luxury-charcoal group">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.7, ease: "easeInOut" }}
             className="absolute inset-0"
           >
             <Image
@@ -43,7 +43,7 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
               }
               alt={`${title} - View ${currentIndex + 1}`}
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
               onError={() => handleImageError(currentIndex)}
@@ -59,17 +59,17 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
-              className={`relative w-24 h-24 shrink-0 overflow-hidden transition-all duration-300 ${
+              className={`relative w-20 h-20 md:w-24 md:h-24 shrink-0 overflow-hidden transition-all duration-300 ${
                 idx === currentIndex
-                  ? "border-2 border-luxury-gold"
-                  : "border border-luxury-charcoal opacity-70 hover:opacity-100"
+                  ? "border-2 border-luxury-gold filter brightness-110"
+                  : "border border-luxury-charcoal opacity-60 hover:opacity-100"
               }`}
             >
               <Image
                 src={failedImages.has(idx) ? PLACEHOLDER_IMG : img}
                 alt={`${title} thumbnail ${idx + 1}`}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-500 hover:scale-110"
                 sizes="96px"
                 onError={() => handleImageError(idx)}
               />

@@ -11,8 +11,14 @@ import {
   Minus,
   ArrowRight,
   Upload,
+  ShieldCheck,
+  Lock,
+  Truck,
+  Award,
+  ChevronDown,
 } from "lucide-react";
 import { generateWhatsAppLink } from "@/services/whatsapp";
+import { AnimatePresence, motion } from "motion/react";
 
 export function ProductInfo({ product }: { product: Product }) {
   const { addItem: addCart } = useCartStore();
@@ -26,6 +32,7 @@ export function ProductInfo({ product }: { product: Product }) {
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string>
   >({});
+  const [activeTab, setActiveTab] = useState<string | null>("description");
 
   const inWishlist = isInWishlist(product.id);
   const isConfigurable = product.type === "configurable";
@@ -78,6 +85,10 @@ export function ProductInfo({ product }: { product: Product }) {
     else addWishlist(product);
   };
 
+  const toggleTab = (tab: string) => {
+    setActiveTab(activeTab === tab ? null : tab);
+  };
+
   const waLink = generateWhatsAppLink(
     `Hello Treasure Arts, I'm interested in the ${product.title}.`,
   );
@@ -92,12 +103,21 @@ export function ProductInfo({ product }: { product: Product }) {
       </h1>
 
       {!isConsultation && (
-        <div className="text-2xl text-luxury-paper mb-8 font-light">
+        <div className="text-2xl text-luxury-paper mb-8 font-light flex items-center gap-4">
           ₦{dynamicPrice.toLocaleString()}
+          {product.stock > 0 ? (
+            <span className="flex items-center gap-2 text-xs uppercase tracking-widest text-gray-400">
+              <div className="w-2 h-2 rounded-full bg-green-500/80"></div> In Stock
+            </span>
+          ) : (
+            <span className="flex items-center gap-2 text-xs uppercase tracking-widest text-gray-400">
+              <div className="w-2 h-2 rounded-full bg-red-500/80"></div> Out of Stock
+            </span>
+          )}
         </div>
       )}
 
-      <p className="text-gray-400 font-light leading-relaxed mb-10 text-lg">
+      <p className="text-gray-400 font-light leading-relaxed mb-10 text-lg line-clamp-3">
         {product.description}
       </p>
 
@@ -118,7 +138,7 @@ export function ProductInfo({ product }: { product: Product }) {
                       onClick={() => handleOptionSelect(option.id, variant.id)}
                       className={`px-6 py-3 border text-sm transition-all duration-300 ${
                         isSelected
-                          ? "border-luxury-gold text-luxury-gold bg-luxury-charcoal/30"
+                          ? "border-luxury-gold text-luxury-gold bg-luxury-charcoal/30 flex items-center gap-2"
                           : "border-luxury-charcoal text-gray-400 hover:border-gray-500 hover:text-luxury-paper"
                       }`}
                     >
@@ -148,7 +168,7 @@ export function ProductInfo({ product }: { product: Product }) {
 
       {/* Action Area */}
       {isConsultation ? (
-        <div className="mt-auto pt-8 border-t border-luxury-charcoal">
+        <div className="mt-auto pt-8 border-t border-luxury-charcoal mb-10">
           <a
             href={waLink}
             target="_blank"
@@ -162,13 +182,14 @@ export function ProductInfo({ product }: { product: Product }) {
           </p>
         </div>
       ) : (
-        <div className="mt-auto flex flex-col gap-6 pt-8 border-t border-luxury-charcoal">
+        <div className="mt-auto flex flex-col gap-6 pt-8 border-t border-luxury-charcoal mb-12">
           <div className="flex items-center gap-4">
             {/* Quantity Selector */}
             <div className="flex items-center border border-luxury-charcoal h-14 w-32 shrink-0">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
                 className="w-10 h-full flex items-center justify-center text-gray-400 hover:text-luxury-paper transition-colors"
+                disabled={product.stock === 0}
               >
                 <Minus className="w-4 h-4" />
               </button>
@@ -176,8 +197,9 @@ export function ProductInfo({ product }: { product: Product }) {
                 {quantity}
               </span>
               <button
-                onClick={() => setQuantity(quantity + 1)}
+                onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
                 className="w-10 h-full flex items-center justify-center text-gray-400 hover:text-luxury-paper transition-colors"
+                disabled={product.stock === 0}
               >
                 <Plus className="w-4 h-4" />
               </button>
@@ -186,9 +208,10 @@ export function ProductInfo({ product }: { product: Product }) {
             {/* Add to Cart */}
             <button
               onClick={handleAddToCart}
-              className="flex-1 h-14 bg-luxury-paper text-black flex items-center justify-center gap-3 text-xs font-bold tracking-widest uppercase hover:bg-luxury-gold transition-colors"
+              disabled={product.stock === 0}
+              className="flex-1 h-14 bg-luxury-paper text-black flex items-center justify-center gap-3 text-xs font-bold tracking-widest uppercase hover:bg-luxury-gold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Add to Cart
+              Ask To Add to Cart
             </button>
 
             {/* Wishlist */}
@@ -201,21 +224,167 @@ export function ProductInfo({ product }: { product: Product }) {
               }`}
             >
               <Heart
-                className="w-5 h-5"
+                className="w-5 h-5 flex-shrink-0"
                 fill={inWishlist ? "currentColor" : "none"}
               />
             </button>
           </div>
-
-          <div className="flex items-center text-xs text-gray-500 uppercase tracking-widest gap-4 mt-2">
-            <span className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500"></div> In Stock
-            </span>
-            <span>|</span>
-            <span>Ships in {isConfigurable ? "2-4 Weeks" : "3-5 Days"}</span>
-          </div>
         </div>
       )}
+
+      {/* Trust Elements Block */}
+      <div className="grid grid-cols-2 gap-4 py-8 border-y border-luxury-charcoal mb-10">
+        <div className="flex items-center gap-3 text-gray-400">
+          <Award className="w-5 h-5 text-luxury-gold shrink-0" />
+          <span className="text-xs tracking-widest uppercase">Handmade Craftsmanship</span>
+        </div>
+        <div className="flex items-center gap-3 text-gray-400">
+          <ShieldCheck className="w-5 h-5 text-luxury-gold shrink-0" />
+          <span className="text-xs tracking-widest uppercase">Premium Quality Guarantee</span>
+        </div>
+        <div className="flex items-center gap-3 text-gray-400">
+          <Lock className="w-5 h-5 text-luxury-gold shrink-0" />
+          <span className="text-xs tracking-widest uppercase">Secure Checkout</span>
+        </div>
+        <div className="flex items-center gap-3 text-gray-400">
+          <Truck className="w-5 h-5 text-luxury-gold shrink-0" />
+          <span className="text-xs tracking-widest uppercase">Nationwide Delivery</span>
+        </div>
+      </div>
+
+      {/* Rich Details Accordion */}
+      <div className="flex flex-col divide-y divide-luxury-charcoal border-b border-luxury-charcoal">
+        {/* Full Description */}
+        <div className="py-2">
+          <button
+            onClick={() => toggleTab("description")}
+            className="flex items-center justify-between w-full py-4 text-left group"
+          >
+            <span className="text-xs uppercase tracking-widest text-luxury-paper group-hover:text-luxury-gold transition-colors font-medium">
+              Full Description
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
+                activeTab === "description" ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+          <AnimatePresence>
+            {activeTab === "description" && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="pb-6 pt-2 text-gray-400 font-light leading-relaxed text-sm">
+                  {product.description}
+                  {product.description} {/* Duplicate to show full text for mockup */}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Materials & Dimensions */}
+        <div className="py-2">
+          <button
+            onClick={() => toggleTab("materials")}
+            className="flex items-center justify-between w-full py-4 text-left group"
+          >
+            <span className="text-xs uppercase tracking-widest text-luxury-paper group-hover:text-luxury-gold transition-colors font-medium">
+              Materials & Details
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
+                activeTab === "materials" ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+          <AnimatePresence>
+            {activeTab === "materials" && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="pb-6 pt-2 text-gray-400 font-light leading-relaxed text-sm">
+                  <ul className="list-disc list-inside space-y-2">
+                    <li>Premium High-Gloss Epoxy Resin</li>
+                    <li>Sustainably sourced hardwood accents (if applicable)</li>
+                    <li>Handcrafted in our Nigerian Studio</li>
+                    <li>UV-resistant top coat to prevent yellowing</li>
+                    <li>Weight and detailed dimensions vary by specific piece</li>
+                  </ul>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Care Instructions */}
+        <div className="py-2">
+          <button
+            onClick={() => toggleTab("care")}
+            className="flex items-center justify-between w-full py-4 text-left group"
+          >
+            <span className="text-xs uppercase tracking-widest text-luxury-paper group-hover:text-luxury-gold transition-colors font-medium">
+              Care Instructions
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
+                activeTab === "care" ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+          <AnimatePresence>
+            {activeTab === "care" && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="pb-6 pt-2 text-gray-400 font-light leading-relaxed text-sm">
+                  Keep away from prolonged direct sunlight. Clean with a soft, microfiber cloth and gentle glass cleaner. Do not use abrasive scrubbers or harsh chemicals. For food-contact items, wash by hand only. 
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Delivery */}
+        <div className="py-2">
+          <button
+            onClick={() => toggleTab("delivery")}
+            className="flex items-center justify-between w-full py-4 text-left group"
+          >
+            <span className="text-xs uppercase tracking-widest text-luxury-paper group-hover:text-luxury-gold transition-colors font-medium">
+              Delivery Information
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
+                activeTab === "delivery" ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+          <AnimatePresence>
+            {activeTab === "delivery" && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="pb-6 pt-2 text-gray-400 font-light leading-relaxed text-sm">
+                  We offer nationwide shipping within Nigeria. Pieces in stock typically ship within 3-5 business days. Custom and configurable commissions require 2-4 weeks for complete curing, quality assurance, and polishing before delivery.
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
     </div>
   );
 }
