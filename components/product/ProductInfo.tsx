@@ -4,19 +4,17 @@ import { useState, useEffect } from "react";
 import { Product } from "@/types/product";
 import { useCartStore } from "@/store/useCartStore";
 import { useWishlistStore } from "@/store/useWishlistStore";
-import {
-  Heart,
-  ShoppingBag,
-  Plus,
-  Minus,
-  ArrowRight,
-  Upload,
-  ShieldCheck,
-  Lock,
-  Truck,
-  Award,
-  ChevronDown,
-} from "lucide-react";
+import { Heart } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
+import { Plus } from "lucide-react";
+import { Minus } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { Upload } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
+import { Lock } from "lucide-react";
+import { Truck } from "lucide-react";
+import { Award } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { generateWhatsAppLink } from "@/services/whatsapp";
 import { AnimatePresence, motion } from "motion/react";
 

@@ -3,7 +3,14 @@
 import { useState, useEffect } from "react";
 import { AdminProduct, ProductVariant, useAdminProductsStore } from "@/store/useAdminProductsStore";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Save, UploadCloud, X, Plus, Eye, Trash2, Settings2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { Save } from "lucide-react";
+import { UploadCloud } from "lucide-react";
+import { X } from "lucide-react";
+import { Plus } from "lucide-react";
+import { Eye } from "lucide-react";
+import { Trash2 } from "lucide-react";
+import { Settings2 } from "lucide-react";
 import Link from "next/link";
 import { ImageWithFallback as Image } from "@/components/ui/ImageWithFallback";
 

@@ -4,18 +4,16 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAdminAuthStore } from "@/store/useAdminAuthStore";
 import Link from "next/link";
-import { 
-  LayoutDashboard, 
-  Package, 
-  Tags, 
-  ShoppingCart, 
-  Users, 
-  LayoutTemplate, 
-  Percent, 
-  Settings,
-  LogOut,
-  Menu
-} from "lucide-react";
+import { LayoutDashboard } from "lucide-react";
+import { Package } from "lucide-react";
+import { Tags } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
+import { Users } from "lucide-react";
+import { LayoutTemplate } from "lucide-react";
+import { Percent } from "lucide-react";
+import { Settings } from "lucide-react";
+import { LogOut } from "lucide-react";
+import { Menu } from "lucide-react";
 import { PageTransition } from "@/components/ui/PageTransition";
 
 const navItems = [
