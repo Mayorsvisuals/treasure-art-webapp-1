@@ -7,6 +7,8 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFAB } from "@/components/ui/WhatsAppFAB";
 import { GuidedAssistant } from "@/components/ui/GuidedAssistant";
 
+import { PageTransition } from "@/components/ui/PageTransition";
+
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
@@ -38,7 +40,9 @@ export default function RootLayout({
       >
         <AuthProvider>
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <PageTransition>
+            <main className="flex-1 flex flex-col">{children}</main>
+          </PageTransition>
           <Footer />
           <WhatsAppFAB />
           <GuidedAssistant />
