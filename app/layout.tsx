@@ -2,12 +2,7 @@ import type { Metadata } from "next";
 import { Poppins, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { WhatsAppFAB } from "@/components/ui/WhatsAppFAB";
-import { GuidedAssistant } from "@/components/ui/GuidedAssistant";
-
-import { PageTransition } from "@/components/ui/PageTransition";
+import { SiteLayout } from "@/components/layout/SiteLayout";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -39,13 +34,7 @@ export default function RootLayout({
         className={`${poppins.variable} ${playfair.variable} bg-luxury-black text-luxury-paper font-sans antialiased selection:bg-luxury-gold selection:text-black max-w-screen overflow-x-hidden flex min-h-screen flex-col`}
       >
         <AuthProvider>
-          <Navbar />
-          <PageTransition>
-            <main className="flex-1 flex flex-col">{children}</main>
-          </PageTransition>
-          <Footer />
-          <WhatsAppFAB />
-          <GuidedAssistant />
+          <SiteLayout>{children}</SiteLayout>
         </AuthProvider>
       </body>
     </html>
