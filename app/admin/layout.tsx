@@ -14,6 +14,7 @@ import { Percent } from "lucide-react";
 import { Settings } from "lucide-react";
 import { LogOut } from "lucide-react";
 import { Menu } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { PageTransition } from "@/components/ui/PageTransition";
 
 const navItems = [
@@ -25,6 +26,7 @@ const navItems = [
   { name: "Content Management", href: "/admin/content", icon: FileText },
   { name: "Discounts", href: "/admin/discounts", icon: Percent },
   { name: "Settings", href: "/admin/settings", icon: Settings },
+  { name: "System", href: "/admin/system", icon: ShieldCheck },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
