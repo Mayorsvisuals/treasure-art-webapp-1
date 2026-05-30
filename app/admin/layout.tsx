@@ -9,7 +9,7 @@ import { Package } from "lucide-react";
 import { Tags } from "lucide-react";
 import { ShoppingCart } from "lucide-react";
 import { Users } from "lucide-react";
-import { LayoutTemplate } from "lucide-react";
+import { FileText } from "lucide-react";
 import { Percent } from "lucide-react";
 import { Settings } from "lucide-react";
 import { LogOut } from "lucide-react";
@@ -22,7 +22,7 @@ const navItems = [
   { name: "Categories", href: "/admin/categories", icon: Tags },
   { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
   { name: "Customers", href: "/admin/customers", icon: Users },
-  { name: "Content", href: "/admin/homepage-content", icon: LayoutTemplate },
+  { name: "Content Management", href: "/admin/content", icon: FileText },
   { name: "Discounts", href: "/admin/discounts", icon: Percent },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
