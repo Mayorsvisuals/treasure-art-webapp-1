@@ -7,6 +7,7 @@ CREATE TABLE categories (
     name TEXT NOT NULL,
     slug TEXT NOT NULL UNIQUE,
     description TEXT,
+    image_url TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -17,6 +18,9 @@ CREATE TABLE products (
     category_id UUID REFERENCES categories(id) ON DELETE SET NULL,
     title TEXT NOT NULL,
     slug TEXT NOT NULL UNIQUE,
+    sku TEXT UNIQUE,
+    product_type TEXT DEFAULT 'ready_made', -- ready_made, custom_quote, made_to_order
+    is_customizable BOOLEAN DEFAULT FALSE,
     description TEXT,
     price NUMERIC(10, 2) NOT NULL,
     old_price NUMERIC(10, 2),
@@ -85,6 +89,12 @@ CREATE TABLE custom_orders (
     phone TEXT,
     budget TEXT,
     description TEXT NOT NULL,
+    project_type TEXT,
+    wood_type TEXT,
+    resin_color TEXT,
+    dimensions TEXT,
+    deadline DATE,
+    reference_images JSONB DEFAULT '[]'::jsonb,
     attachments JSONB DEFAULT '[]'::jsonb,
     status TEXT DEFAULT 'new', -- new, reviewing, quoted, accepted, in_progress, completed, cancelled
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -94,7 +104,11 @@ CREATE TABLE custom_orders (
 -- 8. leads
 CREATE TABLE leads (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT,
+    phone TEXT,
     email TEXT NOT NULL UNIQUE,
+    interest TEXT,
+    notes TEXT,
     source TEXT,
     status TEXT DEFAULT 'active',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -105,6 +119,7 @@ CREATE TABLE gallery (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     title TEXT,
     description TEXT,
+    category TEXT,
     image_url TEXT NOT NULL,
     tags TEXT[], -- Array of strings
     display_order INT DEFAULT 0,
@@ -143,6 +158,16 @@ CREATE TABLE site_settings (
     description TEXT,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Indexes for performance optimization
+CREATE INDEX IF NOT EXISTS idx_categories_slug ON categories(slug);
+CREATE INDEX IF NOT EXISTS idx_products_slug ON products(slug);
+CREATE INDEX IF NOT EXISTS idx_products_category_id ON products(category_id);
+CREATE INDEX IF NOT EXISTS idx_products_is_featured ON products(is_featured);
+CREATE INDEX IF NOT EXISTS idx_products_product_type ON products(product_type);
+CREATE INDEX IF NOT EXISTS idx_orders_customer_id ON orders(customer_id);
+CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
+CREATE INDEX IF NOT EXISTS idx_customers_email ON customers(email);
 
 -- Row Level Security (RLS) configuration
 
