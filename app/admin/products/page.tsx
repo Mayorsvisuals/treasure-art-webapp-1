@@ -8,20 +8,36 @@ import { Trash2 } from "lucide-react";
 import { Image as ImageIcon } from "lucide-react";
 import { CheckSquare } from "lucide-react";
 import { Square } from "lucide-react";
-import { useAdminProductsStore, ProductStatus } from "@/store/useAdminProductsStore";
+import { AdminProduct, ProductStatus } from "@/store/useAdminProductsStore";
+import { adminProductService } from "@/lib/services/admin-product.service";
 import Link from "next/link";
 import { ImageWithFallback as Image } from "@/components/ui/ImageWithFallback";
 
 export default function AdminProductsPage() {
-  const { products, deleteProduct, bulkDelete, bulkUpdateStatus } = useAdminProductsStore();
+  const [products, setProducts] = useState<AdminProduct[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   
   // Modal State
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState<string | null>(null);
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    setLoading(true);
+    try {
+      const data = await adminProductService.getProducts();
+      setProducts(data);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+    setLoading(false);
+  };
 
   if (!mounted) return null;
 
@@ -41,17 +57,19 @@ export default function AdminProductsPage() {
     }
   };
 
-  const handleBulkAction = (action: string) => {
+  const handleBulkAction = async (action: string) => {
     if (selectedIds.length === 0) return;
     
     if (action === "delete") {
       if (confirm(`Are you sure you want to delete ${selectedIds.length} products?`)) {
-        bulkDelete(selectedIds);
+        await adminProductService.bulkDelete(selectedIds);
         setSelectedIds([]);
+        loadProducts();
       }
     } else {
-      bulkUpdateStatus(selectedIds, action as ProductStatus);
+      await adminProductService.bulkUpdateStatus(selectedIds, action as ProductStatus);
       setSelectedIds([]);
+      loadProducts();
     }
   };
 
@@ -60,14 +78,19 @@ export default function AdminProductsPage() {
     setDeleteModalOpen(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (productToDelete) {
-      deleteProduct(productToDelete);
+      await adminProductService.deleteProduct(productToDelete);
       setProductToDelete(null);
       setDeleteModalOpen(false);
       setSelectedIds(prev => prev.filter(id => id !== productToDelete));
+      loadProducts();
     }
   };
+
+  if (loading) {
+    return <div className="p-8 text-gray-400">Loading products...</div>;
+  }
 
   return (
     <div className="pb-16 relative">

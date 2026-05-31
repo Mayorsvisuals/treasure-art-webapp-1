@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { AdminProduct, ProductVariant, useAdminProductsStore } from "@/store/useAdminProductsStore";
+import { adminProductService } from "@/lib/services/admin-product.service";
+import { DbCategory } from "@/types/database";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Save } from "lucide-react";
@@ -21,7 +23,6 @@ interface ProductFormProps {
 
 export function ProductForm({ initialData, isEdit }: ProductFormProps) {
   const router = useRouter();
-  const { addProduct, updateProduct } = useAdminProductsStore();
   
   const [formData, setFormData] = useState<AdminProduct>(initialData || {
     id: "PROD-" + Math.floor(1000 + Math.random() * 9000).toString(),
@@ -43,6 +44,16 @@ export function ProductForm({ initialData, isEdit }: ProductFormProps) {
 
   const [imageUrlInput, setImageUrlInput] = useState("");
   const [previewMode, setPreviewMode] = useState(false);
+  const [categories, setCategories] = useState<DbCategory[]>([]);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    async function loadCategories() {
+      const dbCats = await adminProductService.getCategories();
+      setCategories(dbCats);
+    }
+    loadCategories();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -96,13 +107,21 @@ export function ProductForm({ initialData, isEdit }: ProductFormProps) {
     setFormData(prev => ({ ...prev, variants: prev.variants.filter((_, i) => i !== index) }));
   };
 
-  const handleSave = () => {
-    if (isEdit && initialData) {
-      updateProduct(initialData.id, formData);
-    } else {
-      addProduct(formData);
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      if (isEdit && initialData) {
+        await adminProductService.updateProduct(initialData.id, formData);
+      } else {
+        await adminProductService.createProduct(formData);
+      }
+      router.push("/admin/products");
+    } catch (err) {
+      console.error("Failed to save product:", err);
+      // fallback to alert
+      alert("Failed to save product.");
     }
-    router.push("/admin/products");
+    setSaving(false);
   };
 
   if (previewMode) {
@@ -168,9 +187,10 @@ export function ProductForm({ initialData, isEdit }: ProductFormProps) {
           </button>
           <button 
             onClick={handleSave}
-            className="bg-luxury-gold text-black px-6 py-3 text-xs tracking-widest uppercase font-bold hover:bg-white transition-colors flex items-center gap-2"
+            disabled={saving}
+            className="bg-luxury-gold text-black px-6 py-3 text-xs tracking-widest uppercase font-bold hover:bg-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Save className="w-4 h-4" /> Save Product
+            <Save className="w-4 h-4" /> {saving ? "Saving..." : "Save Product"}
           </button>
         </div>
       </div>
@@ -325,11 +345,19 @@ export function ProductForm({ initialData, isEdit }: ProductFormProps) {
                 <label className="block text-xs uppercase tracking-widest text-gray-400 mb-2">Category</label>
                 <select name="category" value={formData.category} onChange={handleChange} className="w-full bg-luxury-black border border-luxury-charcoal px-4 py-3 text-luxury-paper outline-none focus:border-luxury-gold transition-colors appearance-none cursor-pointer">
                   <option value="">Select Category...</option>
-                  <option value="Custom Project">Custom Project</option>
-                  <option value="Resin Supplies">Resin Supplies</option>
-                  <option value="Decor">Decor</option>
-                  <option value="Interiors">Interiors</option>
-                  <option value="Accessories">Accessories</option>
+                  {categories.length > 0 ? (
+                    categories.map(cat => (
+                      <option key={cat.id} value={cat.id}>{cat.name}</option>
+                    ))
+                  ) : (
+                    <>
+                      <option value="Custom Project">Custom Project</option>
+                      <option value="Resin Supplies">Resin Supplies</option>
+                      <option value="Decor">Decor</option>
+                      <option value="Interiors">Interiors</option>
+                      <option value="Accessories">Accessories</option>
+                    </>
+                  )}
                 </select>
               </div>
             </div>
